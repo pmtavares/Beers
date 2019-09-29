@@ -1,0 +1,125 @@
+﻿@model Beer.Models.ShoppingCart
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="text-info">
+    Details Menu Item
+</h3>
+<form method="post">
+    <div class="border backgroundWhite row">
+        <div class="col-md-12 pb-4 d-md-none">
+            <img src="@Model.MenuItem.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+        </div>
+        <div class="col-md-8">
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.Name" class="col-md-form-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="MenuItem.Name" readonly class="form-control bg-white" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.Description" class="col-md-form-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <div class="border p-2">
+                        @Html.Raw(Model.MenuItem.Description)
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.Price" class="col-md-form-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="MenuItem.Price" readonly class="form-control bg-white" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.CategoryId" class="col-md-form-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" readonly class="form-control bg-white" asp-for="MenuItem.Category.Name" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.SubCategoryId" class="col-md-form-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" readonly asp-for="MenuItem.SubCategory.Name" class="form-control bg-white" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.AlcoholVol" class="col-md-form-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <select asp-for="MenuItem.AlcoholVol" asp-items="Html.GetEnumSelectList<MenuItem.EAlcohol>()"
+                            class="form-control bg-white" disabled></select>
+
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="Count" class="col-md-form-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input type="number" asp-for="Count" class="form-control bg-white" />
+                    <span asp-validation-for="Count" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4 mb-2">
+                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <button type="submit" value="Add to cart" class="btn btn-primary form-control">Add to Cart</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-3 offset-1 d-none d-md-block">
+            <img src="@Model.MenuItem.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+        </div>
+
+    </div>
+    <input asp-for="MenuItemId" hidden />
+</form>
+
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: false,
+            statusbar: false,
+            readonly : 1
+        });
+    </script>
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+
+}
+
+
